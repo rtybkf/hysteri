@@ -270,7 +270,7 @@ chmod +x /root/hysteria.sh
 ln -sf /root/hysteria.sh /usr/bin/hy   
 url="hysteria://${ymip}:${port}?protocol=${hysteria_protocol}&auth=${pswd}&peer=${ym}&insecure=${ins}&upmbps=1000&downmbps=1000&alpn=h3#HY-${ymip}"
 echo ${url} > /root/HY/URL.txt
-green "六、hysteria代理服务安装完成"
+green "六、hysteria代理服务安装完成，再次进入脚本的快捷方式为 hy"
 blue "v2rayn客户端配置文件保存到 /root/HY/v2rayn.json"
 blue "分享链接保存到 /root/HY/URL.txt"
 yellow "${url}"
@@ -417,7 +417,8 @@ green "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
 white "甬哥Gitlab项目  ：gitlab.com/rwkgyg"
 white "甬哥blogger博客 ：ygkkk.blogspot.com"
 white "甬哥YouTube频道 ：www.youtube.com/c/甬哥侃侃侃kkkyg"
-white " ========================================================================================"
+green "hysteria脚本安装成功后，再次进入脚本的快捷方式为 hy"
+red "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
 green " 1. 安装hysteria"      
 green " 2. 修改当前协议类型" 
 green " 3. 切换IPV4/IPV6出站优先级" 

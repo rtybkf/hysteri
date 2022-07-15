@@ -417,10 +417,10 @@ green " 0. 退出脚本 "
 red "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
 if [ -f '/usr/local/bin/hysteria' ]; then
 if [ "${hyygV}" = "${remoteV}" ]; then
-green "已安装最新脚本：${hyygV} ，如有更新，此处会自动提示"
+green "已安装最新脚本：${hyygV} ，如有更新，此处会自动提示\n"
 else
 green "当前安装的脚本：${hyygV}"
-yellow "检测到最新脚本：${remoteV} ，可选择5进行更新！"
+yellow "检测到最新脚本：${remoteV} ，可选择5进行更新\n"
 fi
 loVERSION="$(/usr/local/bin/hysteria -v | awk 'NR==1 {print $3}')"
 hyVERSION="v$(curl -Ls "https://data.jsdelivr.com/v1/package/resolve/gh/HyNetwork/Hysteria" | grep '"version":' | sed -E 's/.*"([^"]+)".*/\1/')"
@@ -428,7 +428,7 @@ if [ "${loVERSION}" = "${hyVERSION}" ]; then
 green "hysteria内核版本号：${loVERSION} ，如有更新，此处会自动提示"
 else
 green "当前安装的脚本：${loVERSION}"
-yellow "检测到最新脚本：${hyVERSION} ，可选择6进行更新！"
+yellow "检测到最新脚本：${hyVERSION} ，可选择6进行更新"
 fi
 fi
 echo

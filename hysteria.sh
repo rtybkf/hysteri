@@ -179,7 +179,7 @@ blue "已确认验证密码：${pswd}\n"
 }
 
 insconfig(){
-green "五、设置配置文件中，稍等5秒"
+green "五、设置配置配置文件中……，稍等5秒"
 mkdir -p /root/HY
 v4=$(curl -s4m5 ip.gs -k)
 [[ -z $v4 ]] && rpip=64 || rpip=46
@@ -285,7 +285,38 @@ VERSION="$(/usr/local/bin/hysteria -v | awk 'NR==1 {print $3}')"
 blue "当前hysteria内核版本号：$VERSION"
 }
 
+stclre(){
+if [ ! -f '/etc/hysteria/config.json' ]; then
+red "未正常安装hysteria!" && exit
+fi
+green "hysteria服务执行以下操作"
+readp "1. 重启\n2. 关闭\n3. 启动\n请选择：" action
+if [[ $action == "1" ]];then
+systemctl restart hysteria-server
+green "hysteria服务重启成功"
+hysteriastatus
+white "$status\n"
+elif [[ $action == "2" ]];then
+systemctl stop hysteria-server
+systemctl disable hysteria-server
+green "hysteria服务关闭成功"
+hysteriastatus
+white "$status\n"
+elif [[ $action == "3" ]];then
+systemctl enable hysteria-server
+systemctl start hysteria-server
+green "hysteria服务启动成功"
+hysteriastatus
+white "$status\n"
+else
+red "输入错误,请重新选择" && stclre
+fi
+}
+
 uphyyg(){
+if [ ! -f '/etc/hysteria/config.json' ]; then
+red "未正常安装hysteria!" && exit
+fi    
 wget -N https://gitlab.com/rwkgyg/hysteria-yg/raw/main/hysteria.sh
 chmod +x /root/hysteria.sh 
 ln -sf /root/hysteria.sh /usr/bin/hy
@@ -322,7 +353,7 @@ rrpip="46"
 elif [[ $rrpip == "2" && -n $ipv6 ]];then
 rrpip="64"
 else 
-red "无当前IPV4/IPV6优先选择或者输入错误" && changeip
+red "无IPV4/IPV6优先选择项或者输入错误" && changeip
 fi
 rpip=`cat /etc/hysteria/config.json 2>/dev/null | grep resolve_preference | awk '{print $2}' | awk -F '"' '{ print $2}'`
 sed -i "4s/$rpip/$rrpip/g" /etc/hysteria/config.json

@@ -79,18 +79,6 @@ fi
 [[ $(type -P yum) ]] && yumapt='yum -y' || yumapt='apt -y'
 [[ $(type -P curl) ]] || (yellow "检测到curl未安装，升级安装中" && $yumapt update;$yumapt install curl)
 [[ $(type -P lsof) ]] || (yellow "检测到lsof未安装，升级安装中" && $yumapt update;$yumapt install lsof)
-if [[ $release = Centos ]]; then
-if [[ ${vsid} =~ 8 ]]; then
-cd /etc/yum.repos.d/ && mkdir backup && mv *repo backup/ 
-curl -o /etc/yum.repos.d/CentOS-Base.repo http://mirrors.aliyun.com/repo/Centos-8.repo
-sed -i -e "s|mirrors.cloud.aliyuncs.com|mirrors.aliyun.com|g " /etc/yum.repos.d/CentOS-*
-sed -i -e "s|releasever|releasever-stream|g" /etc/yum.repos.d/CentOS-*
-yum clean all && yum makecache
-fi
-yum install epel-release -y
-else
-$yumapt update
-fi
 systemctl stop firewalld.service >/dev/null 2>&1
 systemctl disable firewalld.service >/dev/null 2>&1
 setenforce 0 >/dev/null 2>&1
@@ -114,6 +102,18 @@ fi
 inshy(){
 if [[ -f '/usr/local/bin/hysteria' ]]; then
 green "已安装hysteria，重装请先执行卸载功能" && exit
+fi
+if [[ $release = Centos ]]; then
+if [[ ${vsid} =~ 8 ]]; then
+cd /etc/yum.repos.d/ && mkdir backup && mv *repo backup/ 
+curl -o /etc/yum.repos.d/CentOS-Base.repo http://mirrors.aliyun.com/repo/Centos-8.repo
+sed -i -e "s|mirrors.cloud.aliyuncs.com|mirrors.aliyun.com|g " /etc/yum.repos.d/CentOS-*
+sed -i -e "s|releasever|releasever-stream|g" /etc/yum.repos.d/CentOS-*
+yum clean all && yum makecache
+fi
+yum install epel-release -y
+else
+$yumapt update
 fi
 systemctl stop hysteria-server >/dev/null 2>&1
 systemctl disable hysteria-server >/dev/null 2>&1

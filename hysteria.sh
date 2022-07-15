@@ -376,11 +376,12 @@ white "甬哥blogger博客 ：ygkkk.blogspot.com"
 white "甬哥YouTube频道 ：www.youtube.com/c/甬哥侃侃侃kkkyg"
 white " ========================================================================================"
 green " 1. 安装hysteria"      
-green " 2. 修改当前协议类型"      
-green " 3. 更新脚本"  
-green " 4. 更新hysteria内核"
-green " 5. 切换IPV4/IPV6出站优先级" 
-green " 6. 卸载hysteria"
+green " 2. 修改当前协议类型" 
+green " 3. 切换IPV4/IPV6出站优先级" 
+green " 4. 关闭、启动、重启hysteria "    
+green " 5. 更新脚本"  
+green " 6. 更新hysteria内核"
+green " 7. 卸载hysteria"
 green " 0. 退出脚本 "
 red "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
 if [ -f '/usr/local/bin/hysteria' ]; then
@@ -388,7 +389,7 @@ if [ "${hyygV}" = "${remoteV}" ]; then
 green "已安装最新脚本：${hyygV} ，如有更新，此处会自动提示"
 else
 green "当前安装的脚本：${hyygV}"
-yellow "检测到最新脚本：${remoteV} ，可选择3进行更新！"
+yellow "检测到最新脚本：${remoteV} ，可选择5进行更新！"
 fi
 loVERSION="$(/usr/local/bin/hysteria -v | awk 'NR==1 {print $3}')"
 hyVERSION="v$(curl -Ls "https://data.jsdelivr.com/v1/package/resolve/gh/HyNetwork/Hysteria" | grep '"version":' | sed -E 's/.*"([^"]+)".*/\1/')"
@@ -396,7 +397,7 @@ if [ "${loVERSION}" = "${hyVERSION}" ]
 green "hysteria内核版本号：${loVERSION} ，如有更新，此处会自动提示"
 else
 green "当前安装的脚本：${loVERSION}"
-yellow "检测到最新脚本：${hyVERSION} ，可选择4进行更新！"
+yellow "检测到最新脚本：${hyVERSION} ，可选择6进行更新！"
 fi
 fi
 echo
@@ -408,14 +409,14 @@ readp "请输入数字:" Input
 case "$Input" in     
  1 ) inshysteria;;
  2 ) changepr;;
- 3 ) uphyyg;;
- 4 ) uphysteriacore;; 
- 5 ) changeip;;
- 6 ) unins;;	
+ 3 ) changeip;;
+ 4 ) stclre;;
+ 5 ) uphyyg;; 
+ 6 ) uphysteriacore;;
+ 7 ) unins;;	
  * ) exit 
 esac
 }
-
 if [ $# == 0 ]; then
 start
 start_menu

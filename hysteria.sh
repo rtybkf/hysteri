@@ -334,6 +334,11 @@ chmod +x /root/hysteria.sh
 ln -sf /root/hysteria.sh /usr/bin/hy
 }
 
+cfwarp(){
+wget -N --no-check-certificate https://gitlab.com/rwkgyg/cfwarp/raw/main/CFwarp.sh && bash CFwarp.sh
+}
+
+
 changepr(){
 if [ ! -f '/etc/hysteria/config.json' ]; then
 red "未正常安装hysteria!" && exit
@@ -422,11 +427,12 @@ red "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 green " 1. 安装hysteria"      
 green " 2. 修改当前协议类型" 
 green " 3. 切换IPV4/IPV6出站优先级" 
-green " 4. 关闭、启动、重启hysteria "    
+green " 4. 关闭、启动、重启hysteria"   
 green " 5. 更新脚本"  
 green " 6. 更新hysteria内核"
-green " 7. 卸载hysteria"
-green " 0. 退出脚本 "
+green " 7. 安装warp（可选）"
+green " 8. 卸载hysteria"
+green " 0. 退出脚本"
 red "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
 if [ -f '/usr/local/bin/hysteria' ]; then
 if [ "${hyygV}" = "${remoteV}" ]; then
@@ -457,7 +463,8 @@ case "$Input" in
  4 ) stclre;;
  5 ) uphyyg;; 
  6 ) uphysteriacore;;
- 7 ) unins;;	
+ 7 ) cfwarp;;
+ 8 ) unins;;	
  * ) exit 
 esac
 }

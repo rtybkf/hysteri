@@ -424,7 +424,7 @@ yellow "检测到最新脚本：${remoteV} ，可选择5进行更新！"
 fi
 loVERSION="$(/usr/local/bin/hysteria -v | awk 'NR==1 {print $3}')"
 hyVERSION="v$(curl -Ls "https://data.jsdelivr.com/v1/package/resolve/gh/HyNetwork/Hysteria" | grep '"version":' | sed -E 's/.*"([^"]+)".*/\1/')"
-if [ "${loVERSION}" = "${hyVERSION}" ]
+if [ "${loVERSION}" = "${hyVERSION}" ]; then
 green "hysteria内核版本号：${loVERSION} ，如有更新，此处会自动提示"
 else
 green "当前安装的脚本：${loVERSION}"

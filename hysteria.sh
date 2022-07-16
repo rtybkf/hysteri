@@ -269,24 +269,6 @@ cat <<EOF > /root/HY/acl/v2rayn.json
 EOF
 }
 
-over(){
-if [[ -n $(systemctl status hysteria-server 2>/dev/null | grep -w active) ]]; then
-chmod +x /root/hysteria.sh 
-ln -sf /root/hysteria.sh /usr/bin/hy
-wget -NP /root/HY https://gitlab.com/rwkgyg/hysteria-yg/raw/main/GetRoutes.py 
-cd /root/HY/acl
-python3 /root/HY/acl/GetRoutes.py
-url="hysteria://${ymip}:${port}?protocol=${hysteria_protocol}&auth=${pswd}&peer=${ym}&insecure=${ins}&upmbps=1000&downmbps=1000&alpn=h3#HY-${ymip}"
-echo ${url} > /root/HY/URL.txt
-green "六、hysteria代理服务安装完成，生成脚本的快捷方式为 hy"
-blue "v2rayn客户端配置文件v2rayn.json及acl文件保存到 /root/HY/acl"
-blue "分享链接保存到 /root/HY/URL.txt"
-yellow "${url}"
-else
-red "hysteria代理服务安装失败，请运行 systemctl status hysteria-server 查看服务日志" && exit
-fi
-}
-
 unins(){
 systemctl stop hysteria-server.service >/dev/null 2>&1
 systemctl disable hysteria-server.service >/dev/null 2>&1
@@ -402,9 +384,23 @@ insconfig
 systemctl enable hysteria-server >/dev/null 2>&1
 systemctl start hysteria-server >/dev/null 2>&1
 systemctl restart hysteria-server >/dev/null 2>&1
+if [[ -n $(systemctl status hysteria-server 2>/dev/null | grep -w active) && -f '/etc/hysteria/config.json' ]]; then
+wget -NP /root/HY https://gitlab.com/rwkgyg/hysteria-yg/raw/main/GetRoutes.py 
+cd /root/HY/acl
+python3 /root/HY/acl/GetRoutes.py
 hysteriastatus
 white "$status\n"
-over
+chmod +x /root/hysteria.sh 
+ln -sf /root/hysteria.sh /usr/bin/hy
+url="hysteria://${ymip}:${port}?protocol=${hysteria_protocol}&auth=${pswd}&peer=${ym}&insecure=${ins}&upmbps=1000&downmbps=1000&alpn=h3#HY-${ymip}"
+echo ${url} > /root/HY/URL.txt
+green "六、hysteria代理服务安装完成，生成脚本的快捷方式为 hy"
+blue "v2rayn客户端配置文件v2rayn.json及acl文件保存到 /root/HY/acl"
+blue "分享链接保存到 /root/HY/URL.txt"
+yellow "${url}"
+else
+red "hysteria代理服务安装失败，请运行 systemctl status hysteria-server 查看服务日志" && exit
+fi
 }
 
 hysteriastatus(){

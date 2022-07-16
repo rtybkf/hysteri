@@ -273,8 +273,9 @@ over(){
 if [[ -n $(systemctl status hysteria-server 2>/dev/null | grep -w active) ]]; then
 chmod +x /root/hysteria.sh 
 ln -sf /root/hysteria.sh /usr/bin/hy
-wget -NP /root/HY/acl https://gitlab.com/rwkgyg/hysteria-yg/raw/main/GetRoutes.py 
-python3 -u /root/HY/acl/GetRoutes.py
+wget -NP /root/HY https://gitlab.com/rwkgyg/hysteria-yg/raw/main/GetRoutes.py 
+cd /root/HY/acl
+python3 GetRoutes.py
 url="hysteria://${ymip}:${port}?protocol=${hysteria_protocol}&auth=${pswd}&peer=${ym}&insecure=${ins}&upmbps=1000&downmbps=1000&alpn=h3#HY-${ymip}"
 echo ${url} > /root/HY/URL.txt
 green "六、hysteria代理服务安装完成，生成脚本的快捷方式为 hy"

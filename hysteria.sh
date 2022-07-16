@@ -366,7 +366,7 @@ green "$(cat /root/HY/URL.txt)"
 }
 
 changeip(){
-if [ ! -f "/etc/hysteria/config.json" ]; then
+if [ ! -f '/etc/hysteria/config.json' ]; then
 red "未正常安装hysteria!" && exit
 fi
 ipv6=$(curl -s6m5 ip.gs -k) 
@@ -443,7 +443,7 @@ green " 8. 安装BBR+FQ加速（可选）"
 green " 9. 卸载hysteria"
 green " 0. 退出脚本"
 red "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
-if [ -f '/usr/local/bin/hysteria' ]; then
+if [[ -n $(systemctl status hysteria-server 2>/dev/null | grep -w active) && -f '/etc/hysteria/config.json' ]]; then
 if [ "${hyygV}" = "${remoteV}" ]; then
 green "当前脚本版本号：${hyygV} ，如有更新，此处会自动提示\n"
 else

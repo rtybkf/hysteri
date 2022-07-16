@@ -101,7 +101,7 @@ fi
 }
 
 inshy(){
-if [[ -f '/usr/local/bin/hysteria' ]]; then
+if [[ -n $(systemctl status hysteria-server 2>/dev/null | grep -w active) && -f '/etc/hysteria/config.json' ]]; then
 green "已安装hysteria，重装请先执行卸载功能" && exit
 fi
 if [[ $release = Centos ]]; then

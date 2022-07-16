@@ -79,6 +79,7 @@ fi
 [[ $(type -P yum) ]] && yumapt='yum -y' || yumapt='apt -y'
 [[ $(type -P curl) ]] || (yellow "检测到curl未安装，升级安装中" && $yumapt update;$yumapt install curl)
 [[ $(type -P lsof) ]] || (yellow "检测到lsof未安装，升级安装中" && $yumapt update;$yumapt install lsof)
+[[ ! $(type -P python3) ]] && (yellow "检测到python3未安装，升级安装中" && $yumapt update;$yumapt install python3)
 systemctl stop firewalld.service >/dev/null 2>&1
 systemctl disable firewalld.service >/dev/null 2>&1
 setenforce 0 >/dev/null 2>&1
@@ -118,7 +119,7 @@ fi
 systemctl stop hysteria-server >/dev/null 2>&1
 systemctl disable hysteria-server >/dev/null 2>&1
 rm -rf /usr/local/bin/hysteria /etc/hysteria /root/HY
-wget -N https://raw.githubusercontent.com/rkygogo/hysteria/master/install_server.sh && bash install_server.sh
+wget -N https://gitlab.com/rwkgyg/hysteria-yg/raw/main/install_server.sh && bash install_server.sh
 if [[ -f '/usr/local/bin/hysteria' ]]; then
 blue "成功安装hysteria版本：$(/usr/local/bin/hysteria -v | awk 'NR==1 {print $3}')\n"
 else
@@ -137,7 +138,7 @@ chmod +755 /etc/hysteria/private.key /etc/hysteria/cert.crt
 ym=www.bing.com
 blue "已确认证书模式: www.bing.com自签证书\n"
 elif [ $certificate == "2" ];then
-wget -N https://raw.githubusercontent.com/rkygogo/1-acmecript/main/acme.sh && bash acme.sh
+wget -N https://gitlab.com/rwkgyg/acme-script/raw/main/acme.sh && bash acme.sh
 chmod +755 /etc/hysteria/private.key /etc/hysteria/cert.crt
 else 
 red "输入错误，请重新选择" && inscertificate
@@ -236,7 +237,7 @@ ym=$(cat /etc/hysteria/ca.log)
 ymip=$ym;ins=false
 fi
 
-cat <<EOF > /root/HY/v2rayn.json
+cat <<EOF > /root/HY/acl/v2rayn.json
 {
 "server": "${ymip}:${port}",
 "protocol": "${hysteria_protocol}",
@@ -267,11 +268,13 @@ EOF
 over(){
 if [[ -n $(systemctl status hysteria-server 2>/dev/null | grep -w active) ]]; then
 chmod +x /root/hysteria.sh 
-ln -sf /root/hysteria.sh /usr/bin/hy   
+ln -sf /root/hysteria.sh /usr/bin/hy
+wget -N https://gitlab.com/rwkgyg/hysteria-yg/raw/main/GetRoutes.py /root/HY/acl >/dev/null 2>&1
+phthon3 /root/HY/acl/GetRoutes.py >/dev/null 2>&1
 url="hysteria://${ymip}:${port}?protocol=${hysteria_protocol}&auth=${pswd}&peer=${ym}&insecure=${ins}&upmbps=1000&downmbps=1000&alpn=h3#HY-${ymip}"
 echo ${url} > /root/HY/URL.txt
-green "六、hysteria代理服务安装完成，再次进入脚本的快捷方式为 hy"
-blue "v2rayn客户端配置文件保存到 /root/HY/v2rayn.json"
+green "六、hysteria代理服务安装完成，生成脚本的快捷方式为 hy"
+blue "v2rayn客户端配置文件v2rayn.json及acl文件保存到 /root/HY/acl"
 blue "分享链接保存到 /root/HY/URL.txt"
 yellow "${url}"
 else

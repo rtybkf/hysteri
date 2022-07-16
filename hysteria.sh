@@ -139,7 +139,11 @@ ym=www.bing.com
 blue "已确认证书模式: www.bing.com自签证书\n"
 elif [ $certificate == "2" ];then
 wget -N https://gitlab.com/rwkgyg/acme-script/raw/main/acme.sh && bash acme.sh
+if [[ -f '/etc/hysteria/private.key' ]]; then
 chmod +755 /etc/hysteria/private.key /etc/hysteria/cert.crt
+else
+red "证书申请未成功" && inscertificate
+fi
 else 
 red "输入错误，请重新选择" && inscertificate
 fi

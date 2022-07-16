@@ -385,13 +385,13 @@ systemctl enable hysteria-server >/dev/null 2>&1
 systemctl start hysteria-server >/dev/null 2>&1
 systemctl restart hysteria-server >/dev/null 2>&1
 if [[ -n $(systemctl status hysteria-server 2>/dev/null | grep -w active) && -f '/etc/hysteria/config.json' ]]; then
+chmod +x /root/hysteria.sh 
+ln -sf /root/hysteria.sh /usr/bin/hy
 wget -NP /root/HY https://gitlab.com/rwkgyg/hysteria-yg/raw/main/GetRoutes.py 
 python3 /root/HY/GetRoutes.py
 mv -f Country.mmdb routes.acl /root/HY/acl
 hysteriastatus
 white "$status\n"
-chmod +x /root/hysteria.sh 
-ln -sf /root/hysteria.sh /usr/bin/hy
 url="hysteria://${ymip}:${port}?protocol=${hysteria_protocol}&auth=${pswd}&peer=${ym}&insecure=${ins}&upmbps=1000&downmbps=1000&alpn=h3#HY-${ymip}"
 echo ${url} > /root/HY/URL.txt
 green "六、hysteria代理服务安装完成，生成脚本的快捷方式为 hy"

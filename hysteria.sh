@@ -418,9 +418,9 @@ if [[ -n $(systemctl status hysteria-server 2>/dev/null | grep -w active) && -f 
 noprotocol=`cat /etc/hysteria/config.json 2>/dev/null | grep protocol | awk '{print $2}' | awk -F '"' '{ print $2}'`
 rpip=`cat /etc/hysteria/config.json 2>/dev/null | grep resolve_preference | awk '{print $2}' | awk -F '"' '{ print $2}'`
 [[ $rpip = 64 ]] && v4v6="IPV6优先：$(curl -s6 ip.gs -k)" || v4v6="IPV4优先：$(curl -s4 ip.gs -k)"
-status=$(white "hysteria运行状态：\c";green "运行中";white "hysteria运行协议：\c";green "$noprotocol";white "当前优先出站IP：  \c";green "$v4v6";white "WARP运行状态：    \c";eval echo \$wgcf)
+status=$(white "hysteria状态：\c";green "运行中";white "hysteria协议：\c";green "$noprotocol";white "优先出站IP：  \c";green "$v4v6";white "WARP状态：    \c";eval echo \$wgcf)
 else
-status=$(white "hysteria运行状态：\c";red "未启动";white "WARP运行状态：    \c";eval echo \$wgcf)
+status=$(white "hysteria状态：\c";red "未启动";white "WARP状态：    \c";eval echo \$wgcf)
 fi
 }
 
@@ -469,7 +469,7 @@ fi
 fi
 echo
 white "VPS系统信息如下："
-white "操作系统:         $(blue "$op")" && white "内核版本:         $(blue "$version")" && white "CPU架构 :         $(blue "$cpu")" && white "虚拟化类型:       $(blue "$vi")" && white " TCP算法: $(blue "$bbr")"
+white "操作系统:     $(blue "$op")" && white "内核版本:     $(blue "$version")" && white "CPU架构 :     $(blue "$cpu")" && white "虚拟化类型:   $(blue "$vi")" && white "TCP算法:      $(blue "$bbr")"
 white "$status"
 echo
 readp "请输入数字:" Input

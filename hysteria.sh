@@ -386,9 +386,8 @@ systemctl start hysteria-server >/dev/null 2>&1
 systemctl restart hysteria-server >/dev/null 2>&1
 if [[ -n $(systemctl status hysteria-server 2>/dev/null | grep -w active) && -f '/etc/hysteria/config.json' ]]; then
 wget -NP /root/HY https://gitlab.com/rwkgyg/hysteria-yg/raw/main/GetRoutes.py 
-cd ./root/HY/acl 
 python3 /root/HY/GetRoutes.py
-cd ../..
+mv -f Country.mmdb routes.acl /root/HY/acl
 hysteriastatus
 white "$status\n"
 chmod +x /root/hysteria.sh 

@@ -339,8 +339,13 @@ ln -sf /root/hysteria.sh /usr/bin/hy
 
 cfwarp(){
 wget -N --no-check-certificate https://gitlab.com/rwkgyg/cfwarp/raw/main/CFwarp.sh && bash CFwarp.sh
+
 }
 
+bbr(){
+bash <(curl -L -s https://raw.githubusercontent.com/teddysun/across/master/bbr.sh)
+
+}
 
 changepr(){
 if [ ! -f '/etc/hysteria/config.json' ]; then
@@ -434,7 +439,8 @@ green " 4. 关闭、启动、重启hysteria"
 green " 5. 更新脚本"  
 green " 6. 更新hysteria内核"
 green " 7. 安装warp（可选）"
-green " 8. 卸载hysteria"
+green " 8. 安装BBR+FQ加速（可选）"
+green " 9. 卸载hysteria"
 green " 0. 退出脚本"
 red "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
 if [ -f '/usr/local/bin/hysteria' ]; then
@@ -467,7 +473,8 @@ case "$Input" in
  5 ) uphyyg;; 
  6 ) uphysteriacore;;
  7 ) cfwarp;;
- 8 ) unins;;	
+ 8 ) bbr;;
+ 9 ) unins;;	
  * ) exit 
 esac
 }

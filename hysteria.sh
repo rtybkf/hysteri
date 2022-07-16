@@ -193,7 +193,7 @@ blue "已确认验证密码：${pswd}\n"
 
 insconfig(){
 green "五、设置配置配置文件中……，稍等5秒"
-mkdir -p /root/HY
+mkdir -p /root/HY/acl
 v4=$(curl -s4m5 ip.gs -k)
 [[ -z $v4 ]] && rpip=64 || rpip=46
 cat <<EOF > /etc/hysteria/config.json

@@ -42,6 +42,7 @@ bit=`uname -m`
 [[ $bit = x86_64 ]] && cpu=AMD64
 [[ $bit = aarch64 ]] && cpu=ARM64
 vi=`systemd-detect-virt`
+ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
 
 start(){
 if [[ -n $(sysctl net.ipv4.tcp_congestion_control 2>/dev/null | awk -F ' ' '{print $3}') ]]; then
@@ -281,6 +282,7 @@ systemctl stop hysteria-server.service >/dev/null 2>&1
 systemctl disable hysteria-server.service >/dev/null 2>&1
 rm -f /lib/systemd/system/hysteria-server.service /lib/systemd/system/hysteria-server@.service
 rm -rf /usr/local/bin/hysteria /etc/hysteria /root/HY /root/install_server.sh /root/hysteria.sh /usr/bin/hy
+sed -i '/systemctl restart hysteria-server/d' /etc/crontab
 green "hysteria卸载完成！"
 }
 
@@ -393,6 +395,8 @@ systemctl enable hysteria-server >/dev/null 2>&1
 systemctl start hysteria-server >/dev/null 2>&1
 systemctl restart hysteria-server >/dev/null 2>&1
 if [[ -n $(systemctl status hysteria-server 2>/dev/null | grep -w active) && -f '/etc/hysteria/config.json' ]]; then
+sed -i '/systemctl restart hysteria-server/d' /etc/crontab
+echo "0 4 * * * systemctl restart hysteria-server >/dev/null 2>&1" >> /etc/crontab
 chmod +x /root/hysteria.sh 
 ln -sf /root/hysteria.sh /usr/bin/hy
 wget -NP /root/HY https://gitlab.com/rwkgyg/hysteria-yg/raw/main/GetRoutes.py 

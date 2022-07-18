@@ -159,7 +159,7 @@ fi
 
 inspr(){
 green "二、hysteria的传输协议选择如下:"
-readp "1. udp(回车默认)\n2. wechat-video\n3. faketcp\n请选择：" protocol
+readp "1. udp(回车默认，推荐)\n2. wechat-video（推荐）\n3. faketcp（需要root权限）\n请选择：" protocol
 if [ -z "${protocol}" ] || [ $protocol == "1" ];then
 hysteria_protocol="udp"
 elif [ $protocol == "2" ];then
@@ -287,7 +287,7 @@ green "hysteria卸载完成！"
 }
 
 uphysteriacore(){
-if [ ! -f '/usr/local/bin/hysteria' ]; then
+if [[ -n $(systemctl status hysteria-server 2>/dev/null | grep -w active) && -f '/etc/hysteria/config.json' ]]; then
 red "未正常安装hysteria!" && exit
 fi
 wget -N https://raw.githubusercontent.com/HyNetwork/hysteria/master/install_server.sh && bash install_server.sh
@@ -297,7 +297,7 @@ blue "当前hysteria内核版本号：$VERSION"
 }
 
 stclre(){
-if [ ! -f '/etc/hysteria/config.json' ]; then
+if [[ -n $(systemctl status hysteria-server 2>/dev/null | grep -w active) && -f '/etc/hysteria/config.json' ]]; then
 red "未正常安装hysteria!" && exit
 fi
 green "hysteria服务执行以下操作"
@@ -325,7 +325,7 @@ fi
 }
 
 uphyyg(){
-if [ ! -f '/etc/hysteria/config.json' ]; then
+if [[ -n $(systemctl status hysteria-server 2>/dev/null | grep -w active) && -f '/etc/hysteria/config.json' ]]; then
 red "未正常安装hysteria!" && exit
 fi    
 wget -N https://gitlab.com/rwkgyg/hysteria-yg/raw/main/hysteria.sh
@@ -345,7 +345,7 @@ bash <(curl -L -s https://raw.githubusercontent.com/teddysun/across/master/bbr.s
 }
 
 changepr(){
-if [ ! -f '/etc/hysteria/config.json' ]; then
+if [[ -n $(systemctl status hysteria-server 2>/dev/null | grep -w active) && -f '/etc/hysteria/config.json' ]]; then
 red "未正常安装hysteria!" && exit
 fi
 noprotocol=`cat /etc/hysteria/config.json 2>/dev/null | grep protocol | awk '{print $2}' | awk -F '"' '{ print $2}'`
@@ -363,7 +363,7 @@ green "$(cat /root/HY/URL.txt)"
 }
 
 changeip(){
-if [ ! -f '/etc/hysteria/config.json' ]; then
+if [[ -n $(systemctl status hysteria-server 2>/dev/null | grep -w active) && -f '/etc/hysteria/config.json' ]]; then
 red "未正常安装hysteria!" && exit
 fi
 ipv6=$(curl -s6m5 ip.gs -k) 

@@ -358,6 +358,7 @@ sed -i "s/$noprotocol/$hysteria_protocol/g" /root/HY/URL.txt
 systemctl restart hysteria-server
 blue "hysteria代理服务的协议已由 $noprotocol 更换为 $hysteria_protocol "
 green "v2rayn客户端配置文件已更新，保存到 /root/HY/acl/v2rayn.json"
+yellow "$(cat /root/HY/acl/v2rayn.json)\n"
 green "分享链接已更新，保存到 /root/HY/URL.txt"
 yellow "$(cat /root/HY/URL.txt)"
 }
@@ -407,7 +408,8 @@ white "$status\n"
 url="hysteria://${ymip}:${port}?protocol=${hysteria_protocol}&auth=${pswd}&peer=${ym}&insecure=${ins}&upmbps=1000&downmbps=1000&alpn=h3#HY-${ymip}"
 echo ${url} > /root/HY/URL.txt
 green "六、hysteria代理服务安装完成，生成脚本的快捷方式为 hy"
-blue "v2rayn客户端配置文件v2rayn.json及acl文件保存到 /root/HY/acl"
+blue "v2rayn客户端配置文件v2rayn.json及代理规则文件保存到 /root/HY/acl"
+yellow "$(cat /root/HY/acl/v2rayn.json)\n"
 blue "分享链接保存到 /root/HY/URL.txt"
 yellow "${url}"
 else

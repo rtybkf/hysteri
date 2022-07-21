@@ -1,5 +1,5 @@
 #!/bin/bash
-hyygV="22.7.21 V 1.6"
+hyygV="22.7.21 V 1.7"
 remoteV=`wget -qO- https://gitlab.com/rwkgyg/hysteria-yg/raw/main/hysteria.sh | sed  -n 2p | cut -d '"' -f 2`
 red='\033[0;31m'
 bblue='\033[0;34m'
@@ -433,6 +433,16 @@ status=$(white "hysteria状态：\c";red "未启动";white "WARP状态：    \c"
 fi
 }
 
+hysteriashare(){
+if [[ -z $(systemctl status hysteria-server 2>/dev/null | grep -w active) || ! -f '/etc/hysteria/config.json' ]]; then
+red "未正常安装hysteria!" && exit
+fi
+yellow "当前v2rayn客户端配置文件v2rayn.json内容如下\n"
+green "$(cat /root/HY/acl/v2rayn.json)\n"
+yellow "当前hysteria节点分享链接如下："
+green "$(cat /root/HY/URL.txt)"
+}
+
 start_menu(){
 hysteriastatus
 clear
@@ -456,8 +466,10 @@ green " 4. 关闭、开启、重启hysteria"
 green " 5. 更新hysteria-yg安装脚本"  
 green " 6. 更新hysteria内核"
 green " 7. 卸载hysteria"
-green " 8. 安装warp（可选）"
-green " 9. 安装BBR+FQ加速（可选）"
+white "----------------------------------------------------------------------------------"
+green " 8. 显示hysteria分享链接与V2rayN配置文件"
+green " 9. 安装warp（可选）"
+green " 10. 安装BBR+FQ加速（可选）"
 green " 0. 退出脚本"
 red "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
 if [[ -n $(systemctl status hysteria-server 2>/dev/null | grep -w active) && -f '/etc/hysteria/config.json' ]]; then
@@ -475,8 +487,6 @@ else
 green "当前hysteria内核版本号：${loVERSION}"
 yellow "检测到最新hysteria内核版本号：${hyVERSION} ，可选择6进行更新\n"
 fi
-yellow "当前hysteria节点分享链接："
-green "$(cat /root/HY/URL.txt)"
 fi
 echo
 white "VPS系统信息如下："
@@ -492,8 +502,9 @@ case "$Input" in
  5 ) uphyyg;; 
  6 ) uphysteriacore;;
  7 ) unins;;
- 8 ) cfwarp;;
- 9 ) bbr;;	
+ 8 ) hysteriashare;;
+ 9 ) cfwarp;;
+ 10 ) bbr;;	
  * ) exit 
 esac
 }

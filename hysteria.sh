@@ -353,11 +353,11 @@ blue "当前使用协议：$noprotocol"
 echo
 inspr
 sed -i "s/$noprotocol/$hysteria_protocol/g" /etc/hysteria/config.json
-sed -i "s/$noprotocol/$hysteria_protocol/g" /root/HY/v2rayn.json
+sed -i "s/$noprotocol/$hysteria_protocol/g" /root/HY/acl/v2rayn.json
 sed -i "s/$noprotocol/$hysteria_protocol/g" /root/HY/URL.txt
 systemctl restart hysteria-server
 blue "hysteria代理服务的协议已由 $noprotocol 更换为 $hysteria_protocol "
-green "v2rayn客户端配置文件已更新，保存到 /root/HY/v2rayn.json"
+green "v2rayn客户端配置文件已更新，保存到 /root/HY/acl/v2rayn.json"
 green "分享链接已更新，保存到 /root/HY/URL.txt"
 green "$(cat /root/HY/URL.txt)"
 }

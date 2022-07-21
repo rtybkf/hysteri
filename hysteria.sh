@@ -458,7 +458,7 @@ green " 0. 退出脚本"
 red "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
 if [[ -n $(systemctl status hysteria-server 2>/dev/null | grep -w active) && -f '/etc/hysteria/config.json' ]]; then
 if [ "${hyygV}" = "${remoteV}" ]; then
-green "当前hysteria-yg安装脚本版本号：${hyygV} ，如有更新，此处会自动提示\n"
+green "当前hysteria-yg安装脚本版本号：${hyygV} ，已是最新版本\n"
 else
 green "当前hysteria-yg安装脚本版本号：${hyygV}"
 yellow "检测到最新hysteria-yg安装脚本版本号：${remoteV} ，可选择5进行更新\n"
@@ -466,12 +466,12 @@ fi
 loVERSION="$(/usr/local/bin/hysteria -v | awk 'NR==1 {print $3}')"
 hyVERSION="v$(curl -Ls "https://data.jsdelivr.com/v1/package/resolve/gh/HyNetwork/Hysteria" | grep '"version":' | sed -E 's/.*"([^"]+)".*/\1/')"
 if [ "${loVERSION}" = "${hyVERSION}" ]; then
-green "当前hysteria内核版本号：${loVERSION} ，如有更新，此处会自动提示"
+green "当前hysteria内核版本号：${loVERSION} ，已是最新版本\n"
 else
 green "当前hysteria内核版本号：${loVERSION}"
-yellow "检测到最新hysteria内核版本号：${hyVERSION} ，可选择6进行更新"
+yellow "检测到最新hysteria内核版本号：${hyVERSION} ，可选择6进行更新\n"
 fi
-yellow "当前hysteria节点分享链接 $(cat /root/HY/URL.txt)"
+blue "当前hysteria节点分享链接 $(cat /root/HY/URL.txt)"
 fi
 echo
 white "VPS系统信息如下："

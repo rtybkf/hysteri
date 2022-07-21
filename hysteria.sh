@@ -473,7 +473,7 @@ else
 green "当前hysteria内核版本号：${loVERSION}"
 yellow "检测到最新hysteria内核版本号：${hyVERSION} ，可选择6进行更新\n"
 fi
-green "当前hysteria节点分享链接："
+yellow "当前hysteria节点分享链接："
 green "$(cat /root/HY/URL.txt)"
 fi
 echo

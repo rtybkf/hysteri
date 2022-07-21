@@ -488,7 +488,6 @@ green "当前hysteria内核版本号：${loVERSION}"
 yellow "检测到最新hysteria内核版本号：${hyVERSION} ，可选择6进行更新\n"
 fi
 fi
-echo
 white "VPS系统信息如下："
 white "操作系统:     $(blue "$op")" && white "内核版本:     $(blue "$version")" && white "CPU架构 :     $(blue "$cpu")" && white "虚拟化类型:   $(blue "$vi")" && white "TCP算法:      $(blue "$bbr")"
 white "$status"

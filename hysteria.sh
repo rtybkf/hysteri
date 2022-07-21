@@ -138,7 +138,7 @@ rm -rf install_server.sh
 
 inscertificate(){
 green "一、hysteria协议证书申请方式选择如下:"
-readp "1. www.bing.com自签证书（回车默认）\n2. acme一键申请证书（支持只填域名模式与dns api模式）\n请选择：" certificate
+readp "1. www.bing.com自签证书（回车默认）\n2. acme一键申请证书（支持常规80端口模式与dns api模式）\n请选择：" certificate
 if [ -z "${certificate}" ] || [ $certificate == "1" ];then
 openssl ecparam -genkey -name prime256v1 -out /etc/hysteria/private.key
 openssl req -new -x509 -days 36500 -key /etc/hysteria/private.key -out /etc/hysteria/cert.crt -subj "/CN=www.bing.com"
@@ -159,7 +159,7 @@ fi
 
 inspr(){
 green "二、hysteria的传输协议选择如下:"
-readp "1. udp(回车默认，推荐)\n2. wechat-video（推荐）\n3. faketcp（需要root权限）\n请选择：" protocol
+readp "1. udp（回车默认，推荐）\n2. wechat-video（推荐）\n3. faketcp（需要root权限）\n请选择：" protocol
 if [ -z "${protocol}" ] || [ $protocol == "1" ];then
 hysteria_protocol="udp"
 elif [ $protocol == "2" ];then
@@ -316,7 +316,7 @@ white "$status\n"
 elif [[ $action == "3" ]];then
 systemctl enable hysteria-server
 systemctl start hysteria-server
-green "hysteria服务启动成功"
+green "hysteria服务开启成功"
 hysteriastatus
 white "$status\n"
 else
@@ -443,25 +443,25 @@ green "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
 white "甬哥Gitlab项目  ：gitlab.com/rwkgyg"
 white "甬哥blogger博客 ：ygkkk.blogspot.com"
 white "甬哥YouTube频道 ：www.youtube.com/c/甬哥侃侃侃kkkyg"
-green "hysteria脚本安装成功后，再次进入脚本的快捷方式为 hy"
+green "hysteria-yg脚本安装成功后，再次进入脚本的快捷方式为 hy"
 red "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
 green " 1. 安装hysteria"      
 green " 2. 修改当前协议类型" 
 green " 3. 切换IPV4/IPV6出站优先级" 
-green " 4. 关闭、启动、重启hysteria"   
-green " 5. 更新脚本"  
+green " 4. 关闭、开启、重启hysteria"   
+green " 5. 更新hysteria-yg安装脚本"  
 green " 6. 更新hysteria内核"
-green " 7. 安装warp（可选）"
-green " 8. 安装BBR+FQ加速（可选）"
-green " 9. 卸载hysteria"
+green " 7. 卸载hysteria"
+green " 8. 安装warp（可选）"
+green " 9. 安装BBR+FQ加速（可选）"
 green " 0. 退出脚本"
 red "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
 if [[ -n $(systemctl status hysteria-server 2>/dev/null | grep -w active) && -f '/etc/hysteria/config.json' ]]; then
 if [ "${hyygV}" = "${remoteV}" ]; then
-green "当前脚本版本号：${hyygV} ，如有更新，此处会自动提示\n"
+green "当前hysteria-yg安装脚本版本号：${hyygV} ，如有更新，此处会自动提示\n"
 else
-green "当前脚本版本号：${hyygV}"
-yellow "检测到最新脚本版本号：${remoteV} ，可选择5进行更新\n"
+green "当前hysteria-yg安装脚本版本号：${hyygV}"
+yellow "检测到最新hysteria-yg安装脚本版本号：${remoteV} ，可选择5进行更新\n"
 fi
 loVERSION="$(/usr/local/bin/hysteria -v | awk 'NR==1 {print $3}')"
 hyVERSION="v$(curl -Ls "https://data.jsdelivr.com/v1/package/resolve/gh/HyNetwork/Hysteria" | grep '"version":' | sed -E 's/.*"([^"]+)".*/\1/')"
@@ -485,9 +485,9 @@ case "$Input" in
  4 ) stclre;;
  5 ) uphyyg;; 
  6 ) uphysteriacore;;
- 7 ) cfwarp;;
- 8 ) bbr;;
- 9 ) unins;;	
+ 7 ) unins;;
+ 8 ) cfwarp;;
+ 9 ) bbr;;	
  * ) exit 
 esac
 }

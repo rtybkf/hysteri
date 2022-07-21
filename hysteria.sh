@@ -331,6 +331,7 @@ red "未正常安装hysteria!" && exit
 fi
 wget -N https://gitlab.com/rwkgyg/hysteria-yg/raw/main/hysteria.sh
 chmod +x /root/hysteria.sh 
+rm -rf /usr/bin/hy
 ln -sf /root/hysteria.sh /usr/bin/hy
 green "安装脚本升级成功"
 }

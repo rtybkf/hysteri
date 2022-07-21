@@ -359,7 +359,7 @@ systemctl restart hysteria-server
 blue "hysteria代理服务的协议已由 $noprotocol 更换为 $hysteria_protocol "
 green "v2rayn客户端配置文件已更新，保存到 /root/HY/acl/v2rayn.json"
 green "分享链接已更新，保存到 /root/HY/URL.txt"
-green "$(cat /root/HY/URL.txt)"
+yellow "$(cat /root/HY/URL.txt)"
 }
 
 changeip(){
@@ -471,6 +471,7 @@ else
 green "当前hysteria内核版本号：${loVERSION}"
 yellow "检测到最新hysteria内核版本号：${hyVERSION} ，可选择6进行更新"
 fi
+yellow "当前hysteria节点分享链接 $(cat /root/HY/URL.txt)"
 fi
 echo
 white "VPS系统信息如下："

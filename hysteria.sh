@@ -298,7 +298,7 @@ blue "当前hysteria内核版本号：$VERSION"
 }
 
 stclre(){
-if [[ -z $(systemctl status hysteria-server 2>/dev/null | grep -w active) || ! -f '/etc/hysteria/config.json' ]]; then
+if [[ ! -f '/etc/hysteria/config.json' ]]; then
 red "未正常安装hysteria!" && exit
 fi
 green "hysteria服务执行以下操作"
@@ -438,10 +438,10 @@ hysteriashare(){
 if [[ -z $(systemctl status hysteria-server 2>/dev/null | grep -w active) || ! -f '/etc/hysteria/config.json' ]]; then
 red "未正常安装hysteria!" && exit
 fi
-yellow "当前v2rayn客户端配置文件v2rayn.json内容如下\n"
-green "$(cat /root/HY/acl/v2rayn.json)\n"
-yellow "当前hysteria节点分享链接如下："
-green "$(cat /root/HY/URL.txt)"
+green "当前v2rayn客户端配置文件v2rayn.json内容如下\n"
+yellow "$(cat /root/HY/acl/v2rayn.json)\n"
+green "当前hysteria节点分享链接如下："
+yellow "$(cat /root/HY/URL.txt)"
 }
 
 start_menu(){

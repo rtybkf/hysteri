@@ -159,7 +159,7 @@ fi
 
 inspr(){
 green "二、hysteria的传输协议选择如下:"
-readp "1. udp（回车默认，推荐）\n2. wechat-video（推荐）\n3. faketcp（需要root权限）\n请选择：" protocol
+readp "1. udp（回车默认，推荐）\n2. wechat-video（推荐）\n3. faketcp（仅支持linux客户端且需要root权限）\n请选择：" protocol
 if [ -z "${protocol}" ] || [ $protocol == "1" ];then
 hysteria_protocol="udp"
 elif [ $protocol == "2" ];then
